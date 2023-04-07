@@ -4,9 +4,9 @@ import { StyleSheet, Text, View } from "react-native";
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello Asmolosskiy!</Text>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <View style={styles.innerBox}>
+        <Text style={styles.text}>Hello Andrii</Text>
+      </View>
     </View>
   );
 }
@@ -17,5 +17,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  text: {
+    color: "red",
+    fontSize: 30,
+  },
+  innerBox: {
+    borderWidth: 1,
+    borderColor: "green",
+    padding: 40,
+    borderRadius: 20,
+    width: 250,
   },
 });
