@@ -5,6 +5,7 @@ import {
   View,
   ImageBackground,
   TextInput,
+  Button,
 } from "react-native";
 
 export default function App() {
@@ -18,7 +19,17 @@ export default function App() {
           <Text style={styles.text}>Hello Andrii</Text>
         </View>
 
-        <TextInput style={styles.input} />
+        <View style={styles.form}>
+          <View style={styles.inputBox}>
+            <Text style={styles.inputTitle}>EMAIL ADDRESS</Text>
+            <TextInput style={styles.input} />
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={styles.inputTitle}>PASSWORD</Text>
+            <TextInput style={styles.input} secureTextEntry={true} />
+          </View>
+          <Button title="SIGN IN" />
+        </View>
       </ImageBackground>
     </View>
   );
@@ -51,10 +62,20 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "#f0f8ff",
-    marginHorizontal: 40,
     height: 40,
     borderRadius: 10,
     color: "#f0f8ff",
     textAlign: "center",
+  },
+  form: {
+    marginHorizontal: 40,
+  },
+  inputBox: {
+    marginTop: 20,
+  },
+  inputTitle: {
+    color: "#f0f8ff",
+    marginBottom: 5,
+    fontSize: 12,
   },
 });
