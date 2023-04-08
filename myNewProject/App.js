@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 
 export default function App() {
@@ -66,9 +67,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   btn: {
-    backgroundColor: "#6495ed",
+    backgroundColor: Platform.OS === "ios" ? "#6495ed" : "red",
     height: 40,
     height: 40,
+    borderWidth: 1,
     borderRadius: 10,
     marginTop: 40,
     justifyContent: "center",
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   signBtn: {
-    color: "#f0f8ff",
+    color: Platform.OS === "ios" ? "black" : "#f0f8ff",
     fontSize: 14,
   },
 });
