@@ -5,7 +5,7 @@ import {
   View,
   ImageBackground,
   TextInput,
-  Button,
+  TouchableOpacity,
 } from "react-native";
 
 export default function App() {
@@ -15,10 +15,6 @@ export default function App() {
         source={require("./assets/images/fon.jpeg")}
         style={styles.image}
       >
-        <View style={styles.innerBox}>
-          <Text style={styles.text}>Hello Andrii</Text>
-        </View>
-
         <View style={styles.form}>
           <View style={styles.inputBox}>
             <Text style={styles.inputTitle}>EMAIL ADDRESS</Text>
@@ -28,7 +24,9 @@ export default function App() {
             <Text style={styles.inputTitle}>PASSWORD</Text>
             <TextInput style={styles.input} secureTextEntry={true} />
           </View>
-          <Button title="SIGN IN" />
+          <TouchableOpacity style={styles.btn} activeOpacity={0.7}>
+            <Text style={styles.signBtn}>SIGN IN</Text>
+          </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>
@@ -41,17 +39,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     // alignItems: "center",
     // justifyContent: "center",
-  },
-  text: {
-    color: "red",
-    fontSize: 30,
-  },
-  innerBox: {
-    borderWidth: 1,
-    borderColor: "green",
-    padding: 40,
-    borderRadius: 20,
-    width: 250,
   },
   image: {
     flex: 1,
@@ -77,5 +64,19 @@ const styles = StyleSheet.create({
     color: "#f0f8ff",
     marginBottom: 5,
     fontSize: 12,
+  },
+  btn: {
+    backgroundColor: "#6495ed",
+    height: 40,
+    height: 40,
+    borderRadius: 10,
+    marginTop: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 20,
+  },
+  signBtn: {
+    color: "#f0f8ff",
+    fontSize: 14,
   },
 });
