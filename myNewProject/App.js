@@ -9,10 +9,16 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 
 export default function App() {
-  const [isShowKeuboard, setisShowKeuboard] = useState(false);
+  const [isShowKeyboard, setisShowKeyboard] = useState(false);
+  // console.log(isShowKeyboard, Platform.OS);
+  const keyboarsHide = () => {
+    setisShowKeyboard(false);
+    Keyboard.dismiss();
+  };
 
   return (
     <View style={styles.container}>
@@ -21,17 +27,17 @@ export default function App() {
         style={styles.image}
       >
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={Platform.OS === "ios" ? "padding" : "inherit"}
         >
           <View
-            style={{ ...styles.form, marginBottom: isShowKeuboard ? 20 : 100 }}
+            style={{ ...styles.form, marginBottom: isShowKeyboard ? 20 : 100 }}
           >
             <View style={styles.inputBox}>
               <Text style={styles.inputTitle}>EMAIL ADDRESS</Text>
               <TextInput
                 style={styles.input}
                 onFocus={() => {
-                  setisShowKeuboard(true);
+                  setisShowKeyboard(true);
                 }}
               />
             </View>
@@ -41,11 +47,17 @@ export default function App() {
                 style={styles.input}
                 secureTextEntry={true}
                 onFocus={() => {
-                  setisShowKeuboard(true);
+                  setisShowKeyboard(true);
                 }}
               />
             </View>
-            <TouchableOpacity style={styles.btn} activeOpacity={0.7}>
+            <TouchableOpacity
+              style={styles.btn}
+              activeOpacity={0.7}
+              onPress={() => {
+                keyboarsHide();
+              }}
+            >
               <Text style={styles.signBtn}>SIGN IN</Text>
             </TouchableOpacity>
           </View>
