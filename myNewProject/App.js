@@ -1,5 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Platform,
@@ -10,6 +9,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Keyboard,
+  Dimensions,
 } from "react-native";
 
 const initialState = { email: "", password: "" };
@@ -17,6 +17,21 @@ const initialState = { email: "", password: "" };
 export default function App() {
   const [isShowKeyboard, setisShowKeyboard] = useState(false);
   const [state, setstate] = useState(initialState);
+  const [dimensions, setdimensions] = useState(
+    Dimensions.get("window").width - 20 * 2
+  );
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width;
+      setdimensions(width);
+      console.log(width);
+    };
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  }, []);
 
   const keyboarsHide = () => {
     setisShowKeyboard(false);
