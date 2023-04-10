@@ -54,9 +54,7 @@ export default function App() {
             <TouchableOpacity
               style={styles.btn}
               activeOpacity={0.7}
-              onPress={() => {
-                keyboarsHide();
-              }}
+              onPress={keyboarsHide}
             >
               <Text style={styles.signBtn}>SIGN IN</Text>
             </TouchableOpacity>
