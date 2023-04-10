@@ -12,12 +12,17 @@ import {
   Keyboard,
 } from "react-native";
 
+const initialState = { email: "", password: "" };
+
 export default function App() {
   const [isShowKeyboard, setisShowKeyboard] = useState(false);
-  // console.log(isShowKeyboard, Platform.OS);
+  const [state, setstate] = useState(initialState);
+
   const keyboarsHide = () => {
     setisShowKeyboard(false);
     Keyboard.dismiss();
+    console.log(state);
+    setstate(initialState);
   };
 
   return (
@@ -39,6 +44,10 @@ export default function App() {
                 onFocus={() => {
                   setisShowKeyboard(true);
                 }}
+                value={state.email}
+                onChangeText={(value) =>
+                  setstate((prevState) => ({ ...prevState, email: value }))
+                }
               />
             </View>
             <View style={styles.inputBox}>
@@ -49,6 +58,10 @@ export default function App() {
                 onFocus={() => {
                   setisShowKeyboard(true);
                 }}
+                value={state.password}
+                onChangeText={(value) =>
+                  setstate((prevState) => ({ ...prevState, password: value }))
+                }
               />
             </View>
             <TouchableOpacity
