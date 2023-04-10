@@ -1,34 +1,55 @@
 import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
 import {
   StyleSheet,
+  Platform,
   Text,
   View,
   ImageBackground,
   TextInput,
   TouchableOpacity,
-  Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 
 export default function App() {
+  const [isShowKeuboard, setisShowKeuboard] = useState(false);
+
   return (
     <View style={styles.container}>
       <ImageBackground
         source={require("./assets/images/fon.jpeg")}
         style={styles.image}
       >
-        <View style={styles.form}>
-          <View style={styles.inputBox}>
-            <Text style={styles.inputTitle}>EMAIL ADDRESS</Text>
-            <TextInput style={styles.input} />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <View
+            style={{ ...styles.form, marginBottom: isShowKeuboard ? 20 : 100 }}
+          >
+            <View style={styles.inputBox}>
+              <Text style={styles.inputTitle}>EMAIL ADDRESS</Text>
+              <TextInput
+                style={styles.input}
+                onFocus={() => {
+                  setisShowKeuboard(true);
+                }}
+              />
+            </View>
+            <View style={styles.inputBox}>
+              <Text style={styles.inputTitle}>PASSWORD</Text>
+              <TextInput
+                style={styles.input}
+                secureTextEntry={true}
+                onFocus={() => {
+                  setisShowKeuboard(true);
+                }}
+              />
+            </View>
+            <TouchableOpacity style={styles.btn} activeOpacity={0.7}>
+              <Text style={styles.signBtn}>SIGN IN</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.inputBox}>
-            <Text style={styles.inputTitle}>PASSWORD</Text>
-            <TextInput style={styles.input} secureTextEntry={true} />
-          </View>
-          <TouchableOpacity style={styles.btn} activeOpacity={0.7}>
-            <Text style={styles.signBtn}>SIGN IN</Text>
-          </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
     </View>
   );
@@ -44,7 +65,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     // alignItems: "center",
   },
   input: {
@@ -67,7 +88,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   btn: {
-    backgroundColor: Platform.OS === "ios" ? "#6495ed" : "red",
     height: 40,
     height: 40,
     borderWidth: 1,
@@ -76,6 +96,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginHorizontal: 20,
+
+    ...Platform.select({
+      ios: {
+        backgroundColor: "#6495ed",
+      },
+      android: {
+        backgroundColor: "red",
+      },
+    }),
+    // backgroundColor: Platform.OS === "ios" ? "#6495ed" : "red",
   },
   signBtn: {
     color: Platform.OS === "ios" ? "black" : "#f0f8ff",
