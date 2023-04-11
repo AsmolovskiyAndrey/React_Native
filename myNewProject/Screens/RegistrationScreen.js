@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   StyleSheet,
   Platform,
@@ -12,16 +12,38 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-const initialState = { email: "", password: "" };
+const initialState = { name: "", email: "", password: "" };
 
 export default function RegistrationScreen() {
   const [isShowKeyboard, setisShowKeyboard] = useState(false);
   const [state, setstate] = useState(initialState);
 
+  //! Следит открыта ли клавиатура на экране
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setisShowKeyboard(true); // or some other action
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setisShowKeyboard(false); // or some other action
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   const keyboarsHide = () => {
     setisShowKeyboard(false);
   };
   const resetForm = () => {
+    setisShowKeyboard(false);
     console.log(state);
     Keyboard.dismiss();
     setstate(initialState);
@@ -40,13 +62,26 @@ export default function RegistrationScreen() {
             <View
               style={{
                 ...styles.form,
-                paddingBottom: isShowKeyboard ? 20 : 113,
+                paddingBottom: isShowKeyboard ? 20 : 78,
               }}
             >
               <Text style={styles.text}>Регистрация</Text>
               <View style={styles.inputBox}>
                 <TextInput
                   style={styles.input}
+                  placeholder="Логин"
+                  onFocus={() => {
+                    setisShowKeyboard(true);
+                  }}
+                  value={state.name}
+                  onChangeText={(value) =>
+                    setstate((prevState) => ({ ...prevState, name: value }))
+                  }
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Адрес электронной почты"
+                  keyboardType="email-address"
                   onFocus={() => {
                     setisShowKeyboard(true);
                   }}
@@ -55,10 +90,9 @@ export default function RegistrationScreen() {
                     setstate((prevState) => ({ ...prevState, email: value }))
                   }
                 />
-              </View>
-              <View style={styles.inputBox}>
                 <TextInput
                   style={styles.input}
+                  placeholder="Пароль"
                   secureTextEntry={true}
                   onFocus={() => {
                     setisShowKeyboard(true);
@@ -69,13 +103,30 @@ export default function RegistrationScreen() {
                   }
                 />
               </View>
-              <TouchableOpacity
-                style={styles.btn}
-                activeOpacity={0.7}
-                onPress={keyboarsHide}
-              >
-                <Text style={styles.signBtn}>Зарегистрироваться</Text>
-              </TouchableOpacity>
+              <View style={styles.btnBox}>
+                {!isShowKeyboard && (
+                  <TouchableOpacity
+                    style={styles.btnReg}
+                    activeOpacity={0.7}
+                    onPress={resetForm}
+                  >
+                    <Text style={styles.signBtnReg}>Зарегистрироваться</Text>
+                  </TouchableOpacity>
+                )}
+                {!isShowKeyboard && (
+                  <TouchableOpacity
+                    style={styles.btnIn}
+                    activeOpacity={0.7}
+                    onPress={() => {
+                      console.log("Вход с аккаунтом");
+                    }}
+                  >
+                    <Text style={styles.signBtnIn}>
+                      Уже есть аккаунт? Войти
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
           </KeyboardAvoidingView>
         </ImageBackground>
@@ -97,7 +148,9 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     fontSize: 30,
-    marginBottom: 32,
+  },
+  inputBox: {
+    marginTop: 33,
   },
   input: {
     borderWidth: 1,
@@ -113,25 +166,31 @@ const styles = StyleSheet.create({
   },
   form: {
     backgroundColor: "#fff",
-    // marginHorizontal: 40,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingTop: 92,
   },
-  inputBox: {
-    marginTop: 20,
+  btnReg: {
+    height: 50,
+    backgroundColor: "#FF6C00",
+    borderRadius: 100,
+    marginTop: 27,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 16,
   },
-  btn: {
-    height: 40,
-    height: 40,
-    borderWidth: 1,
-    borderRadius: 10,
-    marginTop: 40,
+  btnIn: {
+    marginTop: 16,
     justifyContent: "center",
     alignItems: "center",
     marginHorizontal: 20,
-
-    backgroundColor: "#FF6C00",
   },
-  signBtn: {
+  signBtnReg: {
     color: "#fff",
     fontSize: 14,
+  },
+  signBtnIn: {
+    color: "#1B4371",
+    fontSize: 16,
   },
 });
