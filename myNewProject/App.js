@@ -1,9 +1,9 @@
 import RegistrationScreen from "./Screens/RegistrationScreen";
-// import LoginScreen from "./screens/loginScreen";
+// import LoginScreen from "./Screens/LoginScreen";
 
 export default function App() {
   return (
     <RegistrationScreen />
-    // <lognScreen/>
+    // <LoginScreen />
   );
 }
